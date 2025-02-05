@@ -2,7 +2,8 @@
   (:require [goog.async.nextTick]
             [goog.events :as events]
             [reagent.core]
-            [reagent.ratom]))
+            [reagent.ratom]
+            [signaali.reactive :as sr]))
 
 (defn on-load
   [listener]
@@ -15,7 +16,7 @@
 
 (def empty-queue #queue [])
 
-(def after-render reagent.core/after-render)
+(def after-render next-tick) ;; WON'T FIX
 
 ;; Make sure the Google Closure compiler sees this as a boolean constant,
 ;; otherwise Dead Code Elimination won't happen in `:advanced` builds.
@@ -31,7 +32,7 @@
   ;; generate proper externs. Although not strictly required as
   ;; reagent.ratom/IReactiveAtom is not JS interop it appears to be harmless.
   ;; See https://shadow-cljs.github.io/docs/UsersGuide.html#infer-externs
-  (satisfies? reagent.ratom/IReactiveAtom ^js x))
+  (satisfies? sr/IReactiveNode ^js x))
 
 (defn deref? [x]
   (satisfies? IDeref x))
@@ -63,12 +64,9 @@
   ;; generate proper externs. Although not strictly required as
   ;; reagent.ratom/IReactiveAtom is not JS interop it appears to be harmless.
   ;; See https://shadow-cljs.github.io/docs/UsersGuide.html#infer-externs
-  (when (implements? reagent.ratom/IReactiveAtom ^js reactive-val)
+  (when (implements? sr/IReactiveNode ^js reactive-val)
     (str (condp instance? reactive-val
-           reagent.ratom/RAtom "ra"
-           reagent.ratom/RCursor "rc"
-           reagent.ratom/Reaction "rx"
-           reagent.ratom/Track "tr"
+           sr/ReactiveNode "rn"
            "other")
          (hash reactive-val))))
 

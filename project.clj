@@ -1,6 +1,6 @@
 (defproject     re-frame "lein-git-inject/version"
-  :description  "A ClojureScript MVC-like Framework For Writing SPAs Using Reagent."
-  :url          "https://github.com/day8/re-frame.git"
+  :description  "(a fork of Re-frame) ClojureScript MVC-like Framework For Writing SPAs Using React."
+  :url          "https://github.com/metosin/re-signaali.git"
   :license      {:name "MIT"}
 
   :dependencies [[org.clojure/clojure       "1.11.1" :scope "provided"]
@@ -10,7 +10,7 @@
                                org.clojure/google-closure-library
                                org.clojure/google-closure-library-third-party]]
                  [thheller/shadow-cljs      "2.23.3" :scope "provided"]
-                 [reagent/reagent           "1.2.0"]
+                 [fi.metosin/signaa-gent    "0.1.0"]
                  [net.cgrand/macrovich      "0.2.1"]
                  [org.clojure/tools.logging "1.2.4"]
                  [org.babashka/sci "0.8.40" :scope "provided"]
